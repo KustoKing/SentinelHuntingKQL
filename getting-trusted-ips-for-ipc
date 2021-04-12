@@ -6,7 +6,7 @@ SigninLogs
 | summarize Min= min(TimeGenerated), Max = max(TimeGenerated), dcount(UserPrincipalName) by IPAddress, Location
 | extend Days = Max-Min
 | where dcount_UserPrincipalName > 10
-| distinct IPAddress, Location, dcount_UserPrincipalName
+| distinct IPAddress, Location, dcount_UserPrincipalName, Days
 ;
 OfficeIP
 | sort by Location asc
