@@ -1,0 +1,12 @@
+let OfficeIP = 
+SigninLogs
+| where ResultType == 0
+| where TimeGenerated > ago(90d)
+| where AuthenticationRequirement == "multiFactorAuthentication"
+| summarize Min= min(TimeGenerated), Max = max(TimeGenerated), dcount(UserPrincipalName) by IPAddress, Location
+| extend Days = Max-Min
+| where dcount_UserPrincipalName > 10
+| distinct IPAddress, Location, dcount_UserPrincipalName
+;
+OfficeIP
+| sort by Location asc
